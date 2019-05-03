@@ -1,0 +1,9 @@
+{
+     "success":true,
+     "user":{
+          "name":"raghvendra",
+          "username":"raghvendra",
+          "user_type":"facilitator"
+     },
+     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmFnaHZlbmRyYSIsInVzZXJuYW1lIjoicmFnaHZlbmRyYSIsInVzZXJfdHlwZSI6ImZhY2lsaXRhdG9yIn0.QCP9zo8_WL_LmjP35m6filk23htB3HfGxAGWK9_ZPj8"
+}

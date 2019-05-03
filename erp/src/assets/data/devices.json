@@ -1,0 +1,66 @@
+[{
+  "success": true,
+  "responseContent": [
+    {
+      "contact": "9826012461",
+      "patient_gender": "M",
+      "device_udi": "28-051691b6b4ff",
+      "is_available": true,
+      "device_name": "Temperature_Sensor",
+      "supplier_username": "saurav",
+      "supplier_email": "saurav.kumar@impetus.co.in",
+      "supplier_city": "India",
+      "supplier_contact":"8447541999",
+      "device_state": true,
+      "device_type": "IOT",
+    }
+  ],
+  "responseCode": 1000,
+  "status": 200,
+  "errorCode": null,
+  "errorMessage": null
+},
+{
+  "success": true,
+  "responseContent": [
+    {
+      "contact": "9826012461",
+      "patient_gender": "M",
+      "device_udi": "28-051691b6b4ff",
+      "is_available": true,
+      "device_name": "Temperature_Sensor",
+      "supplier_username": "saurav",
+      "supplier_email": "saurav.kumar@impetus.co.in",
+      "supplier_city": "India",
+      "supplier_contact":"8447541999",
+      "device_state": true,
+      "device_type": "IOT",
+    }
+  ],
+  "responseCode": 1000,
+  "status": 200,
+  "errorCode": null,
+  "errorMessage": null
+},
+{
+  "success": true,
+  "responseContent": [
+    {
+      "contact": "9826012461",
+      "patient_gender": "M",
+      "device_udi": "28-051691b6b4ff",
+      "is_available": true,
+      "device_name": "Temperature_Sensor",
+      "supplier_username": "saurav",
+      "supplier_email": "saurav.kumar@impetus.co.in",
+      "supplier_city": "India",
+      "supplier_contact":"8447541999",
+      "device_state": true,
+      "device_type": "IOT",
+    }
+  ],
+  "responseCode": 1000,
+  "status": 200,
+  "errorCode": null,
+  "errorMessage": null
+}]

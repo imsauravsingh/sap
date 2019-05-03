@@ -1,0 +1,9 @@
+{
+     "success":true,
+     "user":{
+          "name":"taruna",
+          "username":"taruna",
+          "user_type":"supplier"
+     },
+     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGFydW5hIiwidXNlcm5hbWUiOiJ0YXJ1bmEiLCJ1c2VyX3R5cGUiOiJzdXBwbGllciJ9.JBNgujzJUR3T7_A85n0p79Iws6CpLCPDRljvD7X_8Zk"
+}
