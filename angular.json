@@ -23,9 +23,28 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-toggle/css/bootstrap-toggle.min.css",
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/slick-carousel/slick/slick.css",
+              "src/assets/css/element.css",
+              "src/styles.css",
+              "src/assets/css/responsive.css",
+              "src/assets/admin/css/style2.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/slick-carousel/slick/slick.min.js",
+              "node_modules/metismenu/dist/metisMenu.js",
+              "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
+              "src/assets/js/plugins.js",
+              "src/assets/js/main.js",
+              "src/assets/admin/js/plugins.js",
+              "src/assets/admin/js/main.js",
+              "src/assets/admin/js/bootstrap-modalmanager.js",
+              "src/assets/admin/js/bootstrap-modal.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

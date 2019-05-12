@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-4 col-sm-2"></div>
+  <div class="col-md-8 col-sm-10">
+    <form id="login-form" role="form">
+      <ul class="header-top-left">
+        <li><input class="form-header form-control" type="text" name="username" id="username" [(ngModel)]="username"
+            tabindex="1" placeholder="Enter Username or Email ID" required /></li>
+        <li><input class="form-header form-control" type="password" name="password" id="password"  #input [(ngModel)]="password"
+            tabindex="2" placeholder="Enter Password" required /><span toggle="#password-field" data-toggle="tooltip"
+            title="show/hide" class="fa fa-fw fa-eye field-icon toggle-password" (click)="togglePassword(input)"></span></li>
+        <li><a class="button bth-plan" (click)="onLogin()" style="cursor: pointer;">Sign In</a></li>
+        <li><a href="" data-toggle="modal" data-target="#forgotPasswordModal"><i class="fa fa-lock"
+              style="cursor: pointer;"></i>Forgot Password ?</a></li>
+        <br>
+        <span style="color: red"></span>
+      </ul>
+    </form>
+
+  </div>
+</div>

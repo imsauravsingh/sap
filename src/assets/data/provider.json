@@ -1,0 +1,11 @@
+{
+     "success":true,
+     "user":{
+          "name":"saurav",
+          "id":"provider_001",
+          "username":"provider",
+          "user_type":"provider"
+     },
+     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic2F1cmF2IiwidXNlcm5hbWUiOiJzYXVyYXYiLCJ1c2VyX3R5cGUiOiJwcm92aWRlciJ9.D2BE7mlXiwY6TUNBtgEd7EA4TB7QV9ZR-6M8OibIKRw"
+
+}

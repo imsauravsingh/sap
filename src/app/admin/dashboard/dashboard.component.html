@@ -1,0 +1,44 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="inqbox float-e-margins">
+        <div class="inqbox-content">
+          <h2>Dashboard</h2>
+          <ol class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><strong>Categories</strong></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="inqbox">
+        <div class="inqbox-title border-top-primary">
+          <h5>
+            Services <small>To DOMO</small>
+          </h5>
+        </div>
+        <div class="inqbox-content">
+          <div class="row">
+            <div class="col-lg-4" *ngFor="let sap of SAP_LIST; let i = index">
+              <div class="panel panel-default">
+                <div class="panel-heading">{{(sap[0]?sap[0]:'Name not exist!')}}</div>
+                <div class="panel-body">
+                  <img src="{{(sap[1]?sap[1]:'./assets/admin/images/catg/catg01.jpg')}}" alt="{{sap}}" style="width:100%;">
+                </div>
+                <div class="panel-footer">
+                  <a [routerLink]="['/admin/services', sap[0], { pdfUrl: (sap[2]?sap[2]:'') }]" >Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,155 @@
+<div class="col-lg-12 marno">
+  <div class="inqbox float-e-margins">
+    <div class="inqbox-title">
+      <h5>
+        Create New Configuration
+      </h5>
+      <div class="inqbox-tools">
+        <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+        </a>
+      </div>
+    </div>
+    <div class="inqbox-content">
+        <div id="formCreateMessage"></div>
+      <div class="row form-group">
+        <div class="col-sm-6">
+          <label for="versionList">Version: </label>
+          <select name="versionList" id="versionList" *ngIf="versionList" class="form-control"
+            (change)="onChangeVersion($event)">
+            <option [value]="0">-- Select Version --</option>
+            <option *ngFor="let version of versionList" [value]="version">{{version}}</option>
+          </select>
+        </div>
+        <div class="col-sm-6" *ngIf="showApiList==true">
+          <label for="apiList">Api List: </label>
+          <select class="form-control" name="apiList" id="apiList" *ngIf="apiList.length"
+            (change)="onChangeApi($event)">
+            <option [value]="0">-- Select API --</option>
+            <option *ngFor="let api of apiList" [value]="api">{{api}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="inqbox-content" *ngIf="apiFieldList.length">
+      <form method="post" class="form-horizontal" name="createform" (ngSubmit)="onAddConfig(f)" #f="ngForm">
+
+        <div class="form-group">
+
+          <div *ngFor="let apiField of apiFieldList; let i=index;">
+
+            <div *ngIf="apiField.trim().toLowerCase()=='url'" class="col-sm-12">
+              <input type="text" name="{{apiField.trim()}}" class="form-control"
+                placeholder="{{(apiField.replace('_',' ') | titlecase)}}* (Example : http://www.example.com)" ngModel
+                #i="ngModel" required>
+              <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
+                <div *ngIf="i.errors.required">
+                  {{apiField.replace("_"," ") | titlecase}} is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6" *ngIf="apiField.trim().toLowerCase()!='url' && apiField.trim()!='url_password' ">
+              <input type="text" name="{{apiField.trim()}}" class="form-control" ngModel
+                placeholder="{{(apiField.replace('_',' ') | titlecase)}}*" #i="ngModel" required>
+              <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
+                <div *ngIf="i.errors.required">
+                  {{apiField.replace("_"," ") | titlecase}} is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6" *ngIf="apiField.trim().toLowerCase()!='url' && apiField.trim()=='url_password' ">
+              <input type="password" name="{{apiField.trim()}}" class="form-control" ngModel
+                placeholder="{{(apiField.replace('_',' ') | titlecase)}}*" #i="ngModel" #passwordInput required>
+                <span style="margin-top: -47px" class="fa fa-fw fa-eye field-icon toggle-password" (click)="changePasswordToggle(passwordInput)"></span>
+              <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
+                <div *ngIf="i.errors.required">
+                  {{apiField.replace("_"," ") | titlecase}} is required.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+          <!-- <label class="col-lg-2 control-label">Client Id</label> -->
+          <div class="col-lg-6">
+            <input type="text" name="client_id" class="form-control" ngModel #client_id="ngModel"
+              placeholder="Target DOMO System client ID*" required>
+            <div *ngIf="client_id.invalid && (client_id.dirty || client_id.touched)" class="alert alert-danger">
+              <div *ngIf="client_id.errors.required">
+                Client Id is required.
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" name="client_secret" ngModel #client_secret="ngModel"
+              placeholder="Target DOMO System Secret Key*" required>
+            <div *ngIf="client_secret.invalid && (client_secret.dirty || client_secret.touched)"
+              class="alert alert-danger">
+              <div *ngIf="client_secret.errors.required">
+                Client secret is required.
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <!-- <label class="col-sm-2 control-label">Dataset_name</label> -->
+          <div class="col-sm-6">
+            <input type="text" name="dataset_name" (keypress)="omit_special_char($event)" class="form-control" ngModel #dataset_name="ngModel"
+              placeholder="Data Set Name*" required>
+            <div *ngIf="dataset_name.invalid && (dataset_name.dirty || dataset_name.touched)"
+              class="alert alert-danger">
+              <div *ngIf="dataset_name.errors.required">
+                Dataset Name is required.
+              </div>
+              </div>
+          </div>
+          <div class="col-sm-6">
+            <input type="text" name="data_description" class="form-control" ngModel #data_description="ngModel"
+              placeholder="Data Set Description*" required>
+
+            <div *ngIf="data_description.invalid && (data_description.dirty || data_description.touched)"
+              class="alert alert-danger">
+              <div *ngIf="data_description.errors.required">
+                Dataset Desc is required.
+              </div>
+            </div>
+
+          </div>
+          <!-- <label class="col-sm-2 control-label">Url</label> -->
+
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <span class="asterik"></span><input type="email" validate-email ngModel #email_update="ngModel"
+              name="email_update" class="form-control" placeholder="Email Update*  Example " required>
+
+            <div *ngIf="email_update.invalid && (email_update.dirty || email_update.touched)"
+              class="alert alert-danger">
+              <div *ngIf="email_update.errors.required">
+                Email is required.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <div class="col-sm-4">
+            <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Save</button>
+            <button class="btn btn-white" type="button" (click)="onClear()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

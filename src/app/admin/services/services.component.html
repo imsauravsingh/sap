@@ -1,0 +1,43 @@
+<app-service-details *ngIf="showServiceDetails==true"></app-service-details>
+<div *ngIf="showServiceDetails==false">
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div
+          style="width: 100%; background-color: #fff; border: 1px solid #ccc; padding: 10px;">
+          <a href="{{(pdfUrl?pdfUrl:'#')}}"
+            data-toggle="tooltip" title="Click to download guide !"
+            target="_blank"
+            [ngClass]="{disabled: (pdfUrl=='')}"
+            style="font-size: 16px;" download>Best Practice Guide for {{serviceId}}
+            integration to DOMO</a>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inqbox float-e-margins">
+          <div class="inqbox-content">
+            <h2>{{serviceId}} to DOMO</h2>
+            <ol class="breadcrumb">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="index.html">Categories</a></li>
+              <li class="active"><strong>{{serviceId}} to DOMO</strong></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <app-service-form (udpateConfigList)="appServiceList.receiveUpdatedConfigList($event)"></app-service-form>
+    </div>
+
+    <div class="row">
+      <app-service-list #appServiceList></app-service-list>
+    </div>
+  </div>
+
+</div>

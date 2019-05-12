@@ -1,0 +1,22 @@
+<!-- BEGIN HEADER -->
+<div id="header">
+  <nav class="navbar navbar-fixed-top white-bg show-menu-full" id="nav" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <a class="navbar-minimalize minimalize-styl-2 btn" href="javascript:void(0)"><i class="fa fa-bars"
+          style="font-size: 27px;"></i> </a>
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+      <li class="dropdown pull-right"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+          <span class="pl15">{{(currentLoggedUser.name) | titlecase}}
+          </span><span class="caret caret-tp"></span>
+        </a>
+        <ul class="dropdown-menu animated m-t-xs">
+
+          <li><a (click)="onLogout()" class="animated animated-short fadeInUp"><i class="fa fa-sign-out"></i> Logout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>
+<!-- END HEADER -->
