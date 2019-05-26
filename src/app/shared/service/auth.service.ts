@@ -142,14 +142,14 @@ export class AuthService {
     console.log("disableConfig:   getApiFields--->", payload, this.auth_token);
     let headers: any = new HttpHeaders();
     headers.append('Authorization', this.auth_token);
-    return this.http.post(this.disable_config_url, {"userID":payload.userID,"dataset_name":payload.dataset_name}, { headers: headers });
+    return this.http.post(this.disable_config_url, {"userID":payload.userID, "api_name":payload.api_name, "service_type":payload.service_type,"dataset_name":payload.dataset_name}, { headers: headers });
   }
 
   deleteConfig(payload) {
     console.log("deleteConfig:   getApiFields--->", payload, this.auth_token);
     let headers: any = new HttpHeaders();
     headers.append('Authorization', this.auth_token);
-    return this.http.post(this.delete_config_url, {"userID":payload.userID,"dataset_name":payload.dataset_name}, { headers: headers });
+    return this.http.post(this.delete_config_url, {"userID":payload.userID,"api_name":payload.api_name, "service_type":payload.service_type,"dataset_name":payload.dataset_name}, { headers: headers });
   }
 
   createConfig(payload) {
@@ -177,7 +177,7 @@ export class AuthService {
     console.log("changeMode:   getApiFields--->", payload, this.auth_token);
     let headers: any = new HttpHeaders();
     headers.append('Authorization', this.auth_token);
-    return this.http.post(this.change_mode_config_url, {"userID":payload.userID,"dataset_name":payload.dataset_name}, { headers: headers });
+    return this.http.post(this.change_mode_config_url, {"userID":payload.userID,"api_name":payload.api_name, "service_type":payload.service_type, "dataset_name":payload.dataset_name}, { headers: headers });
   }
 
   runNow(payload) {

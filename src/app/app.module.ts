@@ -20,7 +20,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogService } from './confirmation-dialog/confirmation-dialog.service';
 
-
 export function configLoad(config: AppConfig) { return () => config.load(); }
 export function tokenGetter() {
   return localStorage.getItem('access_token');

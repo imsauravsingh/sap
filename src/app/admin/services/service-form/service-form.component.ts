@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { ConfirmationDialogService } from '../../../confirmation-dialog/confirmation-dialog.service';
 import $ from 'jquery';
 
 
@@ -35,13 +36,12 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
   user: any;
   activatedRoute: any;
   targetList: any = [];
-  target:any;
+  target: any;
 
-  constructor(private authService: AuthService, private route: ActivatedRoute) { }
+  constructor(private authService: AuthService, private route: ActivatedRoute, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit() {
     // this.state$ = this.route.params.pipe(map(p => p.id));
-
 
     this.user = this.authService.loadUser()
     this.service_type = this.route.snapshot.params['id'];
@@ -72,24 +72,30 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
       "userID": this.user.name,
       "service_type": this.service_type,
       "version": this.version,
-      "target":this.target
+      "target": this.target
     };
     const configPayload: any = { ...form.value, ...requiredPayload }
     console.log("onAddConfig payload---->", configPayload);
     this.createConfigSubsribe = this.authService.createConfig(configPayload).subscribe((data: { result: {} }) => {
       console.log("create config data -->", data);
+      let msg: string = (typeof data.result == "string" ? data.result : "");
+      this.confirmationDialogService.confirm('Service Confirmation!', msg, false, 'Ok');
+      if (msg.indexOf("exists") !== -1) {
+        console.log("data exists");
+      } else {
+        this.udpateConfigList.emit();
+        this.onClear();
+      }
 
-      $('#formCreateMessage').html('<div class="alert alert-success" role="alert">' + data.result + '</div>');
-      setTimeout(function () {
-        $('#formCreateMessage').fadeOut('fast');
-      }, 8000); // <-- time in milliseconds
+      // $('#formCreateMessage').html('<div class="alert alert-success" role="alert">' + msg + '</div>');
+      // setTimeout(function () {
+      //   $('#formCreateMessage').fadeOut('fast');
+      // }, 8000); // <-- time in milliseconds
 
-      this.udpateConfigList.emit();
-      this.onClear();
     })
   }
 
-  changePasswordToggle(input: any){
+  changePasswordToggle(input: any) {
     this.authService.togglePassword(input);
   }
 
@@ -154,8 +160,9 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
     console.log("onChangeApi-->", apiPayload);
     if (this.api_name != 0) {
       this.apiFieldSubscription = this.authService.getApiFields(apiPayload).subscribe((data: any) => {
-        this.apiFieldList = data.result;
-        console.log("apiList-->", this.apiFieldList);
+          this.apiFieldList = data.result;
+      }, (err: any)=>{
+        this.confirmationDialogService.confirm('Error!', "There is some technical error in API!", false, 'Ok');
       })
     } else {
       this.apiFieldList = [];

@@ -15,6 +15,9 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ServiceDetailsComponent } from './services/service-details/service-details.component';
 import { ServiceListComponent } from './services/service-list/service-list.component';
 import { ServiceFormComponent } from './services/service-form/service-form.component';
+import { ObjNgForPipe } from "../shared/obj-ng-for.pipe"
+import { ObjLengthPipe } from "../shared/obj-length.pipe"
+
 
 @NgModule({
   declarations: [
@@ -29,8 +32,9 @@ import { ServiceFormComponent } from './services/service-form/service-form.compo
     ContactUsComponent,
     ServiceDetailsComponent,
     ServiceListComponent,
-    ServiceFormComponent
-
+    ServiceFormComponent,
+    ObjNgForPipe,
+    ObjLengthPipe
   ],
   imports: [
     CommonModule,

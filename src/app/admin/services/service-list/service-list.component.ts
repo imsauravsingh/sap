@@ -110,6 +110,7 @@ export class ServiceListComponent implements OnInit, AfterContentInit, OnDestroy
 
   getSapList() {
     // Subscribe sap list service
+    this.serviceList=[];
     this.serviceId = this.route.snapshot.params['id'];
     this.user = this.authService.loadUser()
     this.payload = { "userID": (this.user.name), "service_type": this.serviceId, "target":"domo" };
@@ -164,7 +165,8 @@ export class ServiceListComponent implements OnInit, AfterContentInit, OnDestroy
     let data = this.serviceList[index];
     let data_set_name = data.data_set_name;
 
-    let payload = { "userID": (this.user.name), "dataset_name": data_set_name }
+    let payload = { "userID": (this.user.name), "dataset_name": data_set_name, "api_name":data.api_name, "service_type":data.service_type }
+
     this.authService.disableConfig(payload)
       .subscribe((data: any) => {
         if (this.serviceList[index]['active'] == "Activated") {
@@ -181,7 +183,7 @@ export class ServiceListComponent implements OnInit, AfterContentInit, OnDestroy
     console.log("data---",data);
     let data_set_name = data.data_set_name;
 
-    let payload = { "userID": (this.user.name), "dataset_name": data_set_name }
+    let payload = { "userID": (this.user.name), "dataset_name": data_set_name, "api_name":data.api_name, "service_type":data.service_type }
     this.authService.changeMode(payload)
       .subscribe((data: any) => {
         if (this.serviceList[index]['mode'] == 0) {
@@ -204,7 +206,7 @@ export class ServiceListComponent implements OnInit, AfterContentInit, OnDestroy
       .subscribe((data: any) => {
         console.log("runNow data---->",data);
         this.runNowLable[index] = 1;
-        this.confirmationDialogService.confirm('Run Now ', data.result, false, 'Ok');
+        this.confirmationDialogService.confirm('Run Now Confirmation!', data.result, false, 'Ok');
       });
 
   }
@@ -224,14 +226,15 @@ export class ServiceListComponent implements OnInit, AfterContentInit, OnDestroy
 
     this.updateApiFieldList = [];
     let data = Object.assign({}, this.serviceList[i]);
+    this.apiListConfigForm={};
 
     if (data) {
-      this.apiListConfigForm = { "userID": data.user_id, "dataset_name": data.data_set_name, "service_type": data.service_type };
+      this.apiListConfigForm = { "userID": data.user_id, "dataset_name": data.data_set_name, "service_type": data.service_type, "target":data.target };
       let apiListConfig = Object.entries(data);
 
       apiListConfig.map((val) => {
         if (this.checkConfigNotExist(val[0]) == true) {
-          if (val[0] == 'data_set_id' || val[0] == 'data_set_name') {
+          if (val[0] == 'data_set_id' || val[0] == 'data_set_name' || val[0] == 'target') {
             this.formFields[val[0]] = [{ value: val[1], disabled: true }, Validators.required];
           } else if (val[0] == 'email_list') {
             let email: any = val[1];
@@ -274,10 +277,10 @@ export class ServiceListComponent implements OnInit, AfterContentInit, OnDestroy
     let data = Object.assign({},this.serviceList[index]);
     let data_set_name = data.data_set_name;
 
-    this.confirmationDialogService.confirm('Delete Configuration', 'Do you really want to delete ' + data_set_name + '  ?')
+    this.confirmationDialogService.confirm('Delete Configuration!', 'Do you really want to delete ' + data_set_name + '  ?')
       .then((confirmed) => {
         if (confirmed) {
-          let payload = { "userID": (this.user.name), "dataset_name": data_set_name }
+          let payload = { "userID": (this.user.name), "dataset_name": data_set_name, "api_name":data.api_name, "service_type":data.service_type }
           this.authService.deleteConfig(payload)
             .subscribe((data: any) => {
               if (this.serviceList[index]['delete_flag'] == 0) {

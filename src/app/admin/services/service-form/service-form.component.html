@@ -30,27 +30,31 @@
         </div>
       </div>
     </div>
-    <div class="inqbox-content" *ngIf="apiFieldList.length">
+    <div class="inqbox-content" *ngIf="apiFieldList | objLength">
       <form method="post" class="form-horizontal" name="createform" (ngSubmit)="onAddConfig(f)" #f="ngForm">
 
         <div class="form-group">
 
-          <div *ngFor="let apiField of apiFieldList; let i=index;">
+          <div *ngFor="let apiField of apiFieldList | objNgFor; let i=index;">
 
             <div *ngIf="apiField.trim().toLowerCase()=='url'" class="col-sm-12">
-              <input type="text" name="{{apiField.trim()}}" class="form-control"
-                placeholder="{{(apiField.replace('_',' ') | titlecase)}}* (Example : http://www.example.com)" ngModel
-                #i="ngModel" required>
+              <input type="url" name="{{apiField.trim()}}" pattern="https?://.+" class="form-control"
+                placeholder="{{(apiFieldList[apiField].label.replace('_',' ') | titlecase)}}* (Example : http://www.example.com)"
+                ngModel #i="ngModel" value="apiFieldList[apiField].defaultValue" required>
               <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
                 <div *ngIf="i.errors.required">
                   {{apiField.replace("_"," ") | titlecase}} is required.
+                </div>
+                <div *ngIf="!i.errors.required">
+                  Please enter valid URL.
                 </div>
               </div>
             </div>
 
             <div class="col-sm-6" *ngIf="apiField.trim().toLowerCase()!='url' && apiField.trim()!='url_password' ">
               <input type="text" name="{{apiField.trim()}}" class="form-control" ngModel
-                placeholder="{{(apiField.replace('_',' ') | titlecase)}}*" #i="ngModel" required>
+                placeholder="{{(apiFieldList[apiField].label.replace('_',' ') | titlecase)}}*" #i="ngModel"
+                value="apiFieldList[apiField].defaultValue" required>
               <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
                 <div *ngIf="i.errors.required">
                   {{apiField.replace("_"," ") | titlecase}} is required.
@@ -60,12 +64,16 @@
 
             <div class="col-sm-6" *ngIf="apiField.trim().toLowerCase()!='url' && apiField.trim()=='url_password' ">
               <input type="password" name="{{apiField.trim()}}" class="form-control" ngModel
-                placeholder="{{(apiField.replace('_',' ') | titlecase)}}*" #i="ngModel" #passwordInput required>
+                placeholder="{{(apiFieldList[apiField].label.replace('_',' ') | titlecase)}}*" #i="ngModel"
+                #passwordInput minlength="4" value="apiFieldList[apiField].defaultValue" required>
               <span style="margin-top: -47px" class="fa fa-fw fa-eye field-icon toggle-password"
                 (click)="changePasswordToggle(passwordInput)"></span>
               <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
                 <div *ngIf="i.errors.required">
                   {{apiField.replace("_"," ") | titlecase}} is required.
+                </div>
+                <div *ngIf="!i.errors.required">
+                  Minimum password length should be 4 atleast.
                 </div>
               </div>
             </div>
@@ -85,10 +93,11 @@
         </div>
         <div class="row">
           <div class="hr-line-dashed"></div>
-          <div *ngFor="let apiField of targetFieldList; let i=index;">
+          <div *ngFor="let apiField of targetFieldList | objNgFor; let i=index;">
             <div class="col-sm-6" *ngIf="apiField.trim().toLowerCase()!='email_update' ">
               <input type="text" name="{{apiField.trim()}}" class="form-control" ngModel
-                placeholder="{{(apiField.replace('_',' ') | titlecase)}}*" #i="ngModel" required>
+                placeholder="{{(targetFieldList[apiField].label.replace('_',' ') | titlecase)}}*" #i="ngModel"
+                value="targetFieldList[apiField].defaultValue" required>
               <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
                 <div *ngIf="i.errors.required">
                   {{apiField.replace("_"," ") | titlecase}} is required.
@@ -97,14 +106,18 @@
             </div>
 
             <div class="col-sm-12" *ngIf="apiField.trim().toLowerCase()=='email_update' ">
-                <input type="email" name="{{apiField.trim()}}" validate-email class="form-control" ngModel
-                  placeholder="{{(apiField.replace('_',' ') | titlecase)}}*" #i="ngModel" required>
-                <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
-                  <div *ngIf="i.errors.required">
-                    {{apiField.replace("_"," ") | titlecase}} is required.
-                  </div>
+              <input type="email" name="{{apiField.trim()}}" validate-email class="form-control" ngModel
+                placeholder="{{(targetFieldList[apiField].label.replace('_',' ') | titlecase)}}*" #i="ngModel"
+                value="targetFieldList[apiField].defaultValue" required email>
+              <div *ngIf="i.invalid && (i.dirty || i.touched)" class="alert alert-danger">
+                <div *ngIf="i.errors.required">
+                  {{apiField.replace("_"," ") | titlecase}} is required.
+                </div>
+                <div *ngIf="!i.errors.required">
+                  Enter valid email address.
                 </div>
               </div>
+            </div>
 
           </div>
         </div>

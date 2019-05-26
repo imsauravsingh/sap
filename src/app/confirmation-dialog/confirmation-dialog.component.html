@@ -1,15 +1,15 @@
 
 
-<div class="modal-header hide" id="ghanta">
-  <h4 class="modal-title">{{ title }}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+<div class="modal-header">
+  <h4 class="modal-title cd">{{ title }}</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="dismiss()">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> -->
   </div>
-  <div class="modal-body">
+  <div class="modal-body msg">
     {{ message }}
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="accept()">{{ btnOkText }}</button>
+  <div class="modal-footer ftr">
+    <button type="button" class="btn btn-success" [ngClass]="{center: isCancelButton==false}" (click)="accept()">{{ btnOkText }}</button>
     <button type="button" *ngIf="isCancelButton" class="btn btn-danger" (click)="decline()">{{ btnCancelText }}</button>
   </div>

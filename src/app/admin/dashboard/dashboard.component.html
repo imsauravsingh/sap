@@ -24,9 +24,9 @@
         <div class="inqbox-content">
           <div class="row">
             <div class="col-lg-4" *ngFor="let sap of SAP_LIST; let i = index">
-              <div class="panel panel-default">
+              <div class="panel panel-default" >
                 <div class="panel-heading">{{(sap[0]?sap[0]:'Name not exist!')}}</div>
-                <div class="panel-body">
+                <div class="panel-body imgBody" >
                   <img src="{{(sap[1]?sap[1]:'./assets/admin/images/catg/catg01.jpg')}}" alt="{{sap}}" style="width:100%;">
                 </div>
                 <div class="panel-footer">

@@ -1,0 +1,10 @@
+.imgBody{
+  height: 245px;      /* equals max image height */
+  line-height: 245px;
+  text-align: center; margin: 1em 0;
+}
+
+.imgBody img {
+  vertical-align: middle;
+  max-height: 220px;
+}

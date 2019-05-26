@@ -134,7 +134,7 @@
 
                       <div *ngIf="apiField[0].trim().toLowerCase()=='url'" class="col-sm-6">
                         <label for="{{apiField[0]}}">{{(apiField[0].replace('_',' ') | titlecase)}}</label>
-                        <input id="{{apiField[0]}}" type="text" name="{{apiField[0].trim()}}" class="form-control"
+                        <input id="{{apiField[0]}}" type="url" name="{{apiField[0].trim()}}" pattern="https?://.+" class="form-control"
                           placeholder="{{(apiField[0].replace('_',' ') | titlecase)}}* (Example : http://www.example.com)"
                           formControlName="{{apiField[0].trim()}}" required>
                         <div
@@ -143,7 +143,10 @@
                           <div *ngIf="configForm.get(apiField[0]).errors.required">
                             {{apiField[0].replace("_"," ") | titlecase}} is required.
                           </div>
-                        </div>
+                          <div *ngIf="!configForm.get(apiField[0]).errors.required">
+                              Please enter valid Url.
+                            </div>
+                          </div>
                       </div>
 
                       <div class="col-sm-6"
@@ -165,7 +168,7 @@
                         <label for="{{apiField[0]}}">{{(apiField[0].replace('_',' ') | titlecase)}}</label>
                         <input type="password" id="{{apiField[0]}}" name="{{apiField[0].trim()}}" class="form-control"
                           placeholder="{{(apiField[0].replace('_',' ') | titlecase)}}*"
-                          formControlName="{{apiField[0].trim()}}" #passwordInput required>
+                          formControlName="{{apiField[0].trim()}}" minlength="4" #passwordInput required>
                           <span style="margin-top: -47px" class="fa fa-fw fa-eye field-icon toggle-password" (click)="changePasswordToggle(passwordInput)"></span>
                         <div
                           *ngIf="configForm.get(apiField[0]).invalid && (configForm.get(apiField[0]).dirty || configForm.get(apiField[0]).touched)"
@@ -173,7 +176,10 @@
                           <div *ngIf="configForm.get(apiField[0]).errors.required">
                             {{apiField[0].replace("_"," ") | titlecase}} is required.
                           </div>
-                        </div>
+                          <div *ngIf="!configForm.get(apiField[0]).errors.required">
+                            Minimum password length should be 4 atleast.
+                          </div>
+                          </div>
                       </div>
 
                       <div class="col-sm-6" *ngIf="apiField[0].trim().toLowerCase()=='email_list'">
