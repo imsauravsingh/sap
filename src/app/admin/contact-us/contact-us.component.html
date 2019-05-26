@@ -29,7 +29,7 @@
               <p>If you have any enquiries please feel free to contact us
                 and a member of our team will get back to you as soon as
                 possible.</p>
-              <span class="success-msg">emailNotification</span>
+              <span class="success-msg hide">emailNotification</span>
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@
                   <textarea class="text-area" name="message" cols="30" rows="2" type="text" placeholder="Write Message*"
                     id="messageText" ng-model="query.message"></textarea>
                   <button class="button comment-cntact active" type="submit" ng-click="sendQuery()"
-                    ng-disabled="queryForm.$invalid" ng-init="label ='SEND MESSAGE'">label</button>
+                    ng-disabled="queryForm.$invalid" ng-init="label ='SEND MESSAGE'">Send Message</button>
                   <p class="bigtech-send-message"></p>
                 </form>
               </div>

@@ -945,43 +945,43 @@ label {
 ---------------------------------------*/
 
 .bg-1 {
-    background: url(/assets/img/bg/1.jpg);
+    background: url(/assets/img/bg/1.jpg?1);
 }
 
 .bg-2 {
-    background: url(/assets/img/bg/2.jpg);
+    background: url(/assets/img/bg/2.jpg?2);
 }
 
 .bg-3 {
-    background: url(/assets/img/bg/3.jpg);
+    background: url(/assets/img/bg/3.jpg?3);
 }
 
 .bg-4 {
-    background: url(/assets/img/bg/4.jpg);
+    background: url(/assets/img/bg/4.jpg?4);
 }
 
 .bg-5 {
-    background: url(/assets/img/bg/5.jpg);
+    background: url(/assets/img/bg/5.jpg?5);
 }
 
 .bg-6 {
-    background: url(/assets/img/bg/6.jpg);
+    background: url(/assets/img/bg/6.jpg?6);
 }
 
 .bg-7 {
-    background: url(/assets/img/bg/7.jpg);
+    background: url(/assets/img/bg/7.jpg?7);
 }
 
 .bg-8 {
-    background: url(/assets/img/bg/8.jpg);
+    background: url(/assets/img/bg/8.jpg?8);
 }
 
 .bg-9 {
-    background: url(/assets/img/bg/9.jpg);
+    background: url(/assets/img/bg/9.jpg?9);
 }
 
 .bg-10 {
-    background: url(/assets/img/bg/10.jpg);
+    background: url(/assets/img/bg/10.jpg?10);
 }
 
 
@@ -989,31 +989,31 @@ label {
 /*Banner Bg Set*/
 
 .banner-bg-1 {
-    background: url(/assets/img/bg/banner/1.jpg);
+    background: url(/assets/img/bg/banner/1.jpg?1);
 }
 
 .banner-bg-2 {
-    background: url(/assets/img/bg/banner/2.jpg);
+    background: url(/assets/img/bg/banner/2.jpg?1);
 }
 
 .banner-bg-3 {
-    background: url(/assets/img/bg/banner/3.jpg);
+    background: url(/assets/img/bg/banner/3.jpg?1);
 }
 
 .banner-bg-4 {
-    background: url(/assets/img/bg/banner/4.jpg);
+    background: url(/assets/img/bg/banner/4.jpg?1);
 }
 
 .banner-bg-5 {
-    background: url(/assets/img/bg/banner/5.jpg);
+    background: url(/assets/img/bg/banner/5.jpg?1);
 }
 
 .banner-bg-6 {
-    background: url(/assets/img/bg/banner/6.jpg);
+    background: url(/assets/img/bg/banner/6.jpg?1);
 }
 
 .banner-bg-7 {
-    background: url(/assets/img/bg/banner/7.jpg);
+    background: url(/assets/img/bg/banner/7.jpg?1);
 }
 
 .banner-bg-1,
@@ -3626,4 +3626,7 @@ textarea.text-area:focus {
 ngb-modal-window.modal.fade.show.d-block {
   opacity: 5!important;
   padding-top: 60px!important;
+}
+.logopanel a img {
+  width: 100%!important;
 }

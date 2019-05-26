@@ -9784,7 +9784,7 @@ a.button.button-black:hover {
   .metismenu {
     display: block;
     position: fixed;
-    width: 23%;
+    /* width: 23%; */
   }
   .footer {
     background: none repeat scroll 0 0 #fff;
@@ -9792,3 +9792,5 @@ a.button.button-black:hover {
     width: 96%;
   }
 }
+/*
+.alert.flash-message.alert-danger {float: right; background: #fff !important; padding: 50px !important;}*/

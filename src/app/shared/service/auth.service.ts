@@ -24,6 +24,10 @@ export class AuthService {
   create_config_url: string;
   update_config_url: string;
   read_schedule_url: string;
+  change_mode_config_url: string;
+  run_now_config_url: string;
+  targets_config_url: string;
+  target_fields_config_url: string;
 
   constructor(
     private http: HttpClient,
@@ -45,6 +49,10 @@ export class AuthService {
     this.create_config_url = this.config.getConfig('create_config_url');
     this.update_config_url = this.config.getConfig('update_config_url');
     this.read_schedule_url = this.config.getConfig('read_schedule_url');
+    this.change_mode_config_url = this.config.getConfig('change_mode_config_url');
+    this.run_now_config_url = this.config.getConfig('run_now_config_url');
+    this.targets_config_url = this.config.getConfig('targets_config_url');
+    this.target_fields_config_url = this.config.getConfig('target_fields_config_url');
   }
 
   authenticateUser(user) {
@@ -92,7 +100,7 @@ export class AuthService {
     let headers: any = new HttpHeaders();
     headers.append('Authorization', this.auth_token);
     headers.append('application/json');
-    return this.http.post(this.service_list_url, { "userID": data.userID, "service_type": data.service_type }, { headers: headers });
+    return this.http.post(this.service_list_url, { "userID": data.userID, "service_type": data.service_type, "target":data.target }, { headers: headers });
   }
 
   getVersionList(payload) {
@@ -126,8 +134,8 @@ export class AuthService {
     console.log("getApiFields--->", payload, this.auth_token);
     let headers: any = new HttpHeaders();
     headers.append('Authorization', this.auth_token);
-    return this.http.get("./assets/admin/js/logs.json", { headers: headers });
-    // return this.http.post(this.config_log_url, {"userID":payload.userID,"dataset_name":payload.dataset_name}, { headers: headers });
+    // return this.http.get("./assets/admin/js/logs.json", { headers: headers });
+    return this.http.post(this.config_log_url, {"userID":payload.userID,"dataset_name":payload.dataset_name, "service_type":payload.service_type}, { headers: headers });
   }
 
   disableConfig(payload) {
@@ -163,6 +171,34 @@ export class AuthService {
     let headers: any = new HttpHeaders();
     headers.append('Authorization', this.auth_token);
     return this.http.post(this.read_schedule_url, payload, { headers: headers });
+  }
+
+  changeMode(payload) {
+    console.log("changeMode:   getApiFields--->", payload, this.auth_token);
+    let headers: any = new HttpHeaders();
+    headers.append('Authorization', this.auth_token);
+    return this.http.post(this.change_mode_config_url, {"userID":payload.userID,"dataset_name":payload.dataset_name}, { headers: headers });
+  }
+
+  runNow(payload) {
+    console.log("changeMode:   getApiFields--->", payload, this.auth_token);
+    let headers: any = new HttpHeaders();
+    headers.append('Authorization', this.auth_token);
+    return this.http.post(this.run_now_config_url, {"userID":payload.userID,"dataset_name":payload.dataset_name, "target":payload.target}, { headers: headers });
+  }
+
+  getTargets(payload) {
+    console.log("getTargets:   getApiFields--->", payload, this.auth_token);
+    let headers: any = new HttpHeaders();
+    headers.append('Authorization', this.auth_token);
+    return this.http.post(this.targets_config_url, {"userID":payload.userID}, { headers: headers });
+  }
+
+  getTargetFields(payload) {
+    console.log("getTargetFields:   getApiFields--->", payload, this.auth_token);
+    let headers: any = new HttpHeaders();
+    headers.append('Authorization', this.auth_token);
+    return this.http.post(this.target_fields_config_url, {"userID":payload.userID, "target": payload.target}, { headers: headers });
   }
 
   togglePassword(input: any) {

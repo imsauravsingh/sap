@@ -19,9 +19,11 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
 
   versionList: any = [];
   versionSubsribe: Subscription;
+  targetSubsribe: Subscription;
   apiList: any = [];
   apiSubscription: Subscription;
   apiFieldSubscription: Subscription;
+  targetFieldSubscription: Subscription;
   createConfigSubsribe: Subscription;
   showApiList: boolean = false;
   service_type: string;
@@ -29,8 +31,11 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
   version: any;
   api_name: any;
   apiFieldList: any = [];
+  targetFieldList: any = [];
   user: any;
   activatedRoute: any;
+  targetList: any = [];
+  target:any;
 
   constructor(private authService: AuthService, private route: ActivatedRoute) { }
 
@@ -49,6 +54,14 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
       this.versionList = data.result;
       console.log("versionList-->", this.versionList);
     })
+
+    let targetPayload = { "userID": this.currentLoggedUser.name };
+    this.targetSubsribe = this.authService.getTargets(targetPayload).subscribe((data: { result: {} }) => {
+      console.log("targetPayload-->", data);
+      this.targetList = data.result;
+      console.log("this.targetList-->", this.targetList);
+    })
+
   }
 
   onAddConfig(form: NgForm) {
@@ -58,7 +71,8 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
       "api_name": this.api_name,
       "userID": this.user.name,
       "service_type": this.service_type,
-      "version": this.version
+      "version": this.version,
+      "target":this.target
     };
     const configPayload: any = { ...form.value, ...requiredPayload }
     console.log("onAddConfig payload---->", configPayload);
@@ -90,6 +104,7 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
   }
 
   public onChangeVersion(event): void {  // event will give you full breif of action
+    this.apiFieldList = [];
     this.version = event.target.value;
     console.log("onChangeVersion-->", this.version);
     let versionPayload = {
@@ -109,7 +124,26 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  onChangeTarget(event): void {
+    this.targetFieldList = [];
+    this.target = event.target.value;
+    console.log("onChangeTarget-->", this.target);
+    let targetFieldPayload = {
+      "userID": this.currentLoggedUser.name,
+      "target": this.target
+    };
+    if (this.target != 0) {
+      this.targetFieldSubscription = this.authService.getTargetFields(targetFieldPayload).subscribe((data: any) => {
+        this.targetFieldList = data.result;
+        console.log("apiList-->", this.targetFieldList);
+      })
+    } else {
+      this.targetFieldList = [];
+    }
+  }
+
   onChangeApi(event): void {
+    this.apiFieldList = [];
     this.api_name = event.target.value;
     let apiPayload = {
       "userID": this.currentLoggedUser.name,
@@ -134,6 +168,8 @@ export class ServiceFormComponent implements OnInit, OnDestroy {
     if (this.versionSubsribe) { this.versionSubsribe.unsubscribe(); console.log("version list unsubscribe"); }
     if (this.apiFieldSubscription) { this.apiFieldSubscription.unsubscribe(); console.log("apiFieldSubscription unsubscribe"); }
     if (this.createConfigSubsribe) { this.createConfigSubsribe.unsubscribe(); console.log("createConfigSubsribe unsubscribe"); }
+    if (this.targetSubsribe) { this.targetSubsribe.unsubscribe(); console.log("target list unsubscribe"); }
+    if (this.targetFieldSubscription) { this.targetFieldSubscription.unsubscribe(); console.log("target field list unsubscribe"); }
 
   }
 

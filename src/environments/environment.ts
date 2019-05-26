@@ -17,6 +17,11 @@ export const environment = {
   "create_config_url":"http://34.242.51.14:8000/domo/create_config/",
   "update_config_url": "http://34.242.51.14:8000/domo/updateConfig/",
   "read_schedule_url": "http://34.242.51.14:8000/domo/readSchedule/",
+  "change_mode_config_url": "http://34.242.51.14:8000/domo/changeMode/",
+  "run_now_config_url2": "http://34.242.51.14:8000/domo/domo_upload/",
+  "run_now_config_url": "http://34.242.51.14:8000/domo/executeTarget/",
+  "targets_config_url": "http://34.242.51.14:8000/domo/getTargets/",
+  "target_fields_config_url": "http://34.242.51.14:8000/domo/getTargetFields/",
 };
 
 /*

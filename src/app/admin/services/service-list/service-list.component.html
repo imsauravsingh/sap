@@ -44,44 +44,52 @@
               <th class="tab_res">Name of Configuration</th>
               <th class="tab_res">API Name</th>
               <th class="tab_res">Version</th>
+              <th>Target</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
 
           <tbody ng-repeat="item in displayConfig">
-            <tr class="gradeX" *ngFor="let service of serviceList; let i = index; ">
+            <tr *ngIf="!serviceList.length">
+                <td colspan="6" style="text-align:center">No records found!</td>
+            </tr>
+            <tr class="gradeX" *ngFor="let service of serviceList; let i = index; " >
               <!-- <td>{{$index}}</td> -->
               <td class="tab_res">{{service.data_set_name}}</td>
               <td class="tab_res">{{service.api_name}}</td>
               <td class="tab_res">{{service.version}}</td>
+              <td class="tab_res">{{service.target}}</td>
               <td>{{((service.active| lowercase)=="activated"?"Activate":"Deactivate")}}</td>
               <td>
-                <div class="row">
-                  <div class="col-md-3">
-                    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
+                <div class="clearfix">
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
                       data-target="#updateModal"
                       data-backdrop="false"
-                      (click)="getConfigByDataSetName(service.data_set_name, service.user_id, service.service_type)">Update</button>
-                  </div>
-                  <div class="col-md-3">
-                    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal"
+                      (click)="getConfigByDataSetName(i)">Update</button>
+                    <button type="button" class="btn btn-success btn-lg view-log" data-toggle="modal"
                     data-backdrop="false"
-                      data-target="#viewLogsModal" (click)="viewServiceLogs(service.data_set_name)">View Logs</button>
-                  </div>
-                  <div class="col-md-3">
-                    <button type="button" class="btn btn-info btn-lg btn-block"
+                      data-target="#viewLogsModal" (click)="viewServiceLogs(i)">View Logs</button>
+                    <button type="button" class="btn btn-info btn-lg"
+                    [ngClass]="{disabled: (runNowLable[i])==0}"
+                      (click)="runNow(i)">{{(runNowLable[i]==0?"In Progress":"Run Now")}}</button>
+                    <button type="button" class="btn btn-warning btn-lg"
                       [ngClass]="{disabled: (service.delete_flag)!=0}"
-                      (click)="deleteConfig(service.data_set_name, i)">Delete</button>
-                  </div>
-                  <div class="col-md-3">
-                    <button type="button" class="btn btn-danger btn-lg btn-block"
+                      (click)="deleteConfig(i)">Delete</button>
+                    <button type="button" class="btn btn-danger btn-lg"
                       *ngIf="(service.active| lowercase)=='activated'"
-                      (click)="updateStatus(service.data_set_name, i)">Deactivate</button>
-                    <button type="button" class="btn btn-success btn-lg btn-block"
+                      (click)="updateStatus(i)">Deactivate</button>
+                    <button type="button" class="btn btn-success btn-lg activate"
                       *ngIf="(service.active| lowercase)!='activated'"
-                      (click)="updateStatus(service.data_set_name, i)">Activate</button>
-                  </div>
+                      (click)="updateStatus(i)">Activate</button>
+                    <button type="button" class="btn btn-danger btn-lg"
+                      [ngClass]="{disabled: (service.target)=='S3'}"
+                      *ngIf="(service.mode)==1 || (service.mode)=='replace'"
+                      (click)="changeMode(i)">Append</button>
+                    <button type="button" class="btn btn-success btn-lg"
+                    [ngClass]="{disabled: (service.target)=='S3'}"
+                    *ngIf="(service.mode)==0 || (service.mode)=='append'"
+                      (click)="changeMode(i)">Replace</button>
 
                 </div>
               </td>
@@ -92,6 +100,7 @@
               <th>Name of Configuration</th>
               <th>API Name</th>
               <th>Version</th>
+              <th>Target</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -186,147 +195,6 @@
 
                     </div>
                   </div>
-                  <!--
-                      <div class="hr-line-dashed"></div>
-
-                      <div class="form-group">
-                        <label class="col-lg-2 control-label">Client Id</label>
-                        <div class="col-lg-6">
-                          <input type="text" name="client_id" class="form-control" ngModel #client_id="ngModel"
-                            placeholder="Target DOMO System client ID*" required>
-                          <div *ngIf="client_id.invalid && (client_id.dirty || client_id.touched)" class="alert alert-danger">
-                            <div *ngIf="client_id.errors.required">
-                              Client Id is required.
-                            </div>
-                          </div>
-
-                        </div>
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" name="client_secret" ngModel #client_secret="ngModel"
-                            placeholder="Target DOMO System Secret Key*" required>
-                          <div *ngIf="client_secret.invalid && (client_secret.dirty || client_secret.touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="client_secret.errors.required">
-                              Client secret is required.
-                            </div>
-                          </div>
-
-                        </div>
-                      </div>
-                      <div class="hr-line-dashed"></div>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label">Dataset_name</label>
-                        <div class="col-sm-6">
-                          <input type="text" name="dataset_name" class="form-control" ngModel #dataset_name="ngModel"
-                            placeholder="Data Set Name*" required>
-                          <div *ngIf="dataset_name.invalid && (dataset_name.dirty || dataset_name.touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="dataset_name.errors.required">
-                              Dataset Name is required.
-                            </div>
-                          </div>
-
-
-                        </div>
-                        <div class="col-sm-6">
-                          <input type="text" name="data_description" class="form-control" ngModel #data_description="ngModel"
-                            placeholder="Data Set Description*" required>
-
-                          <div *ngIf="data_description.invalid && (data_description.dirty || data_description.touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="data_description.errors.required">
-                              Dataset Desc is required.
-                            </div>
-                          </div>
-
-                        </div>
-                        <label class="col-sm-2 control-label">Url</label>
-
-                      </div>
-
-                      <div class="hr-line-dashed"></div>
-                      <div class="form-group">
-                        <div class="col-sm-12">
-                          <span class="asterik"></span><input type="email" validate-email ngModel #email_update="ngModel"
-                            name="email_update" class="form-control" placeholder="Email Update*  Example " required>
-
-                          <div *ngIf="email_update.invalid && (email_update.dirty || email_update.touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="email_update.errors.required">
-                              Email is required.
-                            </div>
-                          </div>
-
-                        </div>
-                      </div> -->
-
-                  <!--
-                <form method="post" class="form-horizontal" id="updateForm" name="updateConfigForm">
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">API Url</label>
-                    <div class="col-sm-10">
-                      <input type="url" name="url" class="form-control">
-                    </div>
-                  </div>
-                  <div class="hr-line-dashed"></div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">API ID</label>
-                    <div class="col-sm-10">
-                      <input type="url_id" name="url_id" class="form-control">
-                    </div>
-                  </div>
-                  <div class="hr-line-dashed"></div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">API Password</label>
-                    <div class="col-sm-10">
-                      <input type="password" class="form-control" id="passwordInput" name=" API password" value=""><span
-                        toggle="#passwordInput" data-toggle="tooltip" title="show/hide"
-                        class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                    </div>
-                  </div>
-
-                  <div class="hr-line-dashed"></div>
-                  <div class="form-group">
-                    <label class="col-lg-2 control-label">Target DOMO
-                      System client ID</label>
-                    <div class="col-lg-10">
-                      <input type="client_id" name="client_id" class="form-control">
-                    </div>
-                  </div>
-                  <div class="hr-line-dashed"></div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Target DOMO
-                      System Secret Key</label>
-                    <div class="col-sm-10">
-                      <input type="client_secret" class="form-control" name="client_secret">
-                    </div>
-                  </div>
-                  <div class="hr-line-dashed"></div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Data Set
-                      Name</label>
-                    <div class="col-sm-10">
-                      <input type="dataset_name" name="dataset_name" class="form-control" disabled>
-                    </div>
-                  </div>
-
-                  <div class="hr-line-dashed"></div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Data Set
-                      Description</label>
-                    <div class="col-sm-10">
-                      <input type="data_description" name="data_description" class="form-control">
-                    </div>
-                  </div>
-                  <div class="hr-line-dashed"></div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Email Update</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="email_update" class="form-control">
-                    </div>
-                  </div>
-                </form> -->
-
                   <div class="modal-footer">
                     <button class="btn btn-success" type="submit">Update changes</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -349,7 +217,7 @@
                 <h4 class="modal-title" style="color: white">View Logs </h4>
               </div>
               <div class="modal-body table-responsive" style="padding-bottom:0px;">
-                <div *ngIf="viewLogs">
+                <div *ngIf="collectionSize>0">
                   <table style="overflow: auto" class="table table-striped table-bordered table-hover">
                     <thead style="background-color: #ccccff">
                       <tr>
@@ -368,12 +236,12 @@
                       </tr>
                     </tbody>
                   </table>
-                  <center>
+                  <center *ngIf="collectionSize>0">
                     <ngb-pagination [collectionSize]="collectionSize" (pageChange)="getPageFromService($event)"
                       [(page)]="page" [boundaryLinks]="true" [ellipses]="true" [maxSize]="10"></ngb-pagination>
                   </center>
                 </div>
-                <div *ngIf="!viewLogs">No logs available!</div>
+                <div *ngIf="collectionSize==0">{{viewLogsData}}</div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

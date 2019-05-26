@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/service/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-login',
@@ -50,7 +51,11 @@ export class LoginComponent implements OnInit {
             // this.flashMessage.show("You are now logged in", { cssClass: 'alert alert-success', timeout: 5000 });
             this.router.navigate(['/admin']);
           } else {
-            this.flashMessage.show(data.result, { cssClass: 'alert alert-danger', timeout: 5000 });
+            $('#showLoginErrorMsg').text(data.result);
+            // this.flashMessage.show(data.result, { cssClass: 'alert alert-danger', timeout: 5000 });
+            setTimeout(function () {
+              $('#showLoginErrorMsg').fadeOut('fast');
+            }, 8000); 
             this.router.navigate(['/home']);
           }
         });
